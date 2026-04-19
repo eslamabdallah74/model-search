@@ -11,8 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Trigger Packagist Update
+      - name: Update package version
         run: |
-          curl -s -X POST "https://packagist.org/api/update-package" \
-            -u "eslam-abass:a54347e5e21ab449b0ca" \
-            -d "repository=https://github.com/eslamabdallah74/model-search"
+          COMMIT_MSG=$(git log -1 --format=%s)
+          echo "Pushed: $COMMIT_MSG"
