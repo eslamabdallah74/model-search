@@ -4,21 +4,17 @@ on:
   push:
     branches:
       - master
-      - main
 
 jobs:
   update-packagist:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Packagist Update
-        env:
-          PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
+      - uses: actions/checkout@v4
+      
+      - name: Trigger Packagist Webhook
         run: |
-          if [ -n "$PACKAGIST_TOKEN" ]; then
-            curl -X POST "https://packagist.org/api/update-package?username=eslam-abass&api_token=$PACKAGIST_TOKEN" \
-              -H "Accept: application/json" \
-              -d "repository=https://github.com/eslamabdallah74/model-search"
-          else
-            echo "Packagist token not configured. Set PACKAGIST_TOKEN secret."
-            exit 1
-          fi
+          curl -s -X POST "https://packagist.org/api/update-package" \
+            -H "Accept: application/json" \
+            -H "Content-Type: application/json" \
+            -u eslam-abass:${{ secrets.PACKAGIST_TOKEN }} \
+            -d '{"repository":{"url":"https://github.com/eslamabdallah74/model-search"}}'
