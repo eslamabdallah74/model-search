@@ -67,6 +67,15 @@ class SearchService
         return $this->config['searchable_fields'][$modelClass] ?? [];
     }
 
+    public function getDiscoveredFields(string $modelClass): array
+    {
+        if (!$this->isModelAllowed($modelClass)) {
+            return [];
+        }
+
+        return $this->modelDiscovery->getModelFields($modelClass);
+    }
+
     public function search(
         string $modelClass,
         string $field,

@@ -40,7 +40,10 @@ class ModelSearchController
             ], 403);
         }
 
-        $fields = $this->searchService->getAllowedFields($modelClass);
+        $configuredFields = $this->searchService->getAllowedFields($modelClass);
+        $discoveredFields = $this->searchService->getDiscoveredFields($modelClass);
+
+        $fields = !empty($configuredFields) ? $configuredFields : $discoveredFields;
 
         return response()->json([
             'data' => array_map(fn($field) => ['name' => $field], $fields),
