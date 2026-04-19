@@ -11,10 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Trigger Packagist Webhook
+      - name: Trigger Packagist Update
         run: |
           curl -s -X POST "https://packagist.org/api/update-package" \
-            -H "Accept: application/json" \
-            -H "Content-Type: application/json" \
-            -u eslam-abass:${{ secrets.PACKAGIST_TOKEN }} \
-            -d '{"repository":{"url":"https://github.com/eslamabdallah74/model-search"}}'
+            -u "eslam-abass:a54347e5e21ab449b0ca" \
+            -d "repository=https://github.com/eslamabdallah74/model-search"
